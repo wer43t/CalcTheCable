@@ -145,6 +145,74 @@ namespace CalcTheCable
             return ordered;
         }
 
+		public Dictionary<double, double> GetFirstLineForUh220()
+		{
+			var values = new List<double>();
+            var keyValues = new Dictionary<double, double>();
+            values.Add(Math.Sqrt(((_ac300 - _ac240) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.124 - 0.097))));
+            keyValues.Add(_tnb, values.Last());
+            for (double i = 1000; i <= 8000; i += 100)
+            {
+                values.Add(Math.Sqrt(((_ac300 - _ac240) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.124 - 0.097))));
+                if (!keyValues.ContainsKey(i))
+                    keyValues.Add(i, values.Last());
+            }
+
+            var ordered = keyValues.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            return ordered;
+        }
+
+        public Dictionary<double, double> GetSecondLineForUh220()
+        {
+            var values = new List<double>();
+            var keyValues = new Dictionary<double, double>();
+            values.Add(Math.Sqrt(((_ac400 - _ac300) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.097 - 0.077))));
+            keyValues.Add(_tnb, values.Last());
+            for (double i = 1000; i <= 8000; i += 100)
+            {
+                values.Add(Math.Sqrt(((_ac400 - _ac300) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.097 - 0.077))));
+                if (!keyValues.ContainsKey(i))
+                    keyValues.Add(i, values.Last());
+            }
+
+            var ordered = keyValues.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            return ordered;
+        }
+
+        public Dictionary<double, double> GetThirdLineForUh220()
+        {
+            var values = new List<double>();
+            var keyValues = new Dictionary<double, double>();
+            values.Add(Math.Sqrt(((_ac500 - _ac400) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.077 - 0.061))));
+            keyValues.Add(_tnb, values.Last());
+            for (double i = 1000; i <= 8000; i += 100)
+            {
+                values.Add(Math.Sqrt(((_ac500 - _ac400) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.077 - 0.061))));
+                if (!keyValues.ContainsKey(i))
+                    keyValues.Add(i, values.Last());
+            }
+
+            var ordered = keyValues.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            return ordered;
+        }
+
+        public Dictionary<double, double> GetFourtyLineForUh220()
+        {
+            var values = new List<double>();
+            var keyValues = new Dictionary<double, double>();
+            values.Add(Math.Sqrt(((_ac600 - _ac500) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.061 - 0.047))));
+            keyValues.Add(_tnb, values.Last());
+            for (double i = 1000; i <= 8000; i += 100)
+            {
+                values.Add(Math.Sqrt(((_ac600 - _ac500) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.061 - 0.047))));
+                if (!keyValues.ContainsKey(i))
+                    keyValues.Add(i, values.Last());
+            }
+
+            var ordered = keyValues.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            return ordered;
+        }
+
         public void GetT()
 		{
 			_t = ((0.124 + _tnb / 10000) * (0.124 + _tnb / 10000.0) * 8760);
