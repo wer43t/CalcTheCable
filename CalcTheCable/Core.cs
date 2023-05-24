@@ -8,6 +8,17 @@ namespace CalcTheCable
 {
 	internal class Core
 	{
+		private string selectedCable;
+
+		public string SelectedCable
+		{
+			get { return selectedCable; }
+			set { selectedCable = value; }
+		}
+
+		private double previousMax;
+
+
 		private double _t;
 
 		private int minT = 1000;
@@ -36,11 +47,11 @@ namespace CalcTheCable
 		}
 
 
-		private int _nB;
+		private double _nB;
 
 		private int minNB = 10;
 		private int maxNB = 1500;
-		public int NB
+		public double NB
 		{
 			get { return _nB; }
 			set
@@ -114,11 +125,16 @@ namespace CalcTheCable
 		{
 			var values = new List<double>();
 			var keyValues = new Dictionary<double, double>();
-			values.Add(Math.Sqrt(((_ac150 - _ac120) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.286 - 0.204))));
-			keyValues.Add(_tnb, values.Last());
-			for(double i = 1000; i <= 8000; i += 100)
+			values.Add(Math.Sqrt(((_ac150 - _ac120) * (1 + 9.91 * 0.008) * (10 * 10 * 10)) / (3 * (int)_t * 2 * (0.286 - 0.204))));
+			keyValues.Add(_t, values.Last());
+            previousMax = values.Last();
+            if (_nB <= values.First())
+            {
+                SelectedCable = "AC 120";
+            }
+            for (double i = 1000; i <= 8000; i += 100)
 			{
-				values.Add(Math.Sqrt(((_ac150 - _ac120) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.286 - 0.204))));
+				values.Add(Math.Sqrt(((_ac150 - _ac120) * (1 + 9.91 * 0.008) * (10 * 10 * 10)) / (3 * i * 2 * (0.286 - 0.204))));
 				if(!keyValues.ContainsKey(i))
 					keyValues.Add(i, values.Last());
 			}
@@ -133,10 +149,18 @@ namespace CalcTheCable
             var values = new List<double>();
             var keyValues = new Dictionary<double, double>();
             values.Add(Math.Sqrt(((_ac240 - _ac150) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.204 - 0.124))));
-            keyValues.Add(_tnb, values.Last());
+            keyValues.Add(_t, values.Last());
+            if (_nB <= values.First() && _nB >= previousMax)
+            {
+                SelectedCable = "AC 150";
+            }
+            else if (_nB >= values.First())
+            {
+                SelectedCable = "AC 240";
+            }
             for (double i = 1000; i <= 8000; i += 100)
             {
-                values.Add(Math.Sqrt(((_ac240 - _ac150) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.204 - 0.124))));
+                values.Add(Math.Sqrt(((_ac240 - _ac150) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * (i) * 2 * (0.204 - 0.124))));
                 if (!keyValues.ContainsKey(i))
                     keyValues.Add(i, values.Last());
             }
@@ -150,10 +174,15 @@ namespace CalcTheCable
 			var values = new List<double>();
             var keyValues = new Dictionary<double, double>();
             values.Add(Math.Sqrt(((_ac300 - _ac240) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.124 - 0.097))));
-            keyValues.Add(_tnb, values.Last());
+            keyValues.Add(_t, values.Last());
+			previousMax = values.Last();
+			if(_nB <= values.First())
+			{
+				SelectedCable = "AC 240";
+			}
             for (double i = 1000; i <= 8000; i += 100)
             {
-                values.Add(Math.Sqrt(((_ac300 - _ac240) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.124 - 0.097))));
+                values.Add(Math.Sqrt(((_ac300 - _ac240) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * (i) * 2 * (0.124 - 0.097))));
                 if (!keyValues.ContainsKey(i))
                     keyValues.Add(i, values.Last());
             }
@@ -167,10 +196,15 @@ namespace CalcTheCable
             var values = new List<double>();
             var keyValues = new Dictionary<double, double>();
             values.Add(Math.Sqrt(((_ac400 - _ac300) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.097 - 0.077))));
-            keyValues.Add(_tnb, values.Last());
+            keyValues.Add(_t, values.Last());
+            if (_nB <= values.First() && _nB >= previousMax)
+            {
+                SelectedCable = "AC 300";
+            }
+			previousMax = values.First();
             for (double i = 1000; i <= 8000; i += 100)
             {
-                values.Add(Math.Sqrt(((_ac400 - _ac300) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.097 - 0.077))));
+                values.Add(Math.Sqrt(((_ac400 - _ac300) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * (i) * 2 * (0.097 - 0.077))));
                 if (!keyValues.ContainsKey(i))
                     keyValues.Add(i, values.Last());
             }
@@ -184,10 +218,15 @@ namespace CalcTheCable
             var values = new List<double>();
             var keyValues = new Dictionary<double, double>();
             values.Add(Math.Sqrt(((_ac500 - _ac400) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.077 - 0.061))));
-            keyValues.Add(_tnb, values.Last());
+            keyValues.Add(_t, values.Last());
+            if (_nB <= values.First() && _nB >= previousMax)
+            {
+                SelectedCable = "AC 400";
+            }
+			previousMax = values.First();
             for (double i = 1000; i <= 8000; i += 100)
             {
-                values.Add(Math.Sqrt(((_ac500 - _ac400) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.077 - 0.061))));
+                values.Add(Math.Sqrt(((_ac500 - _ac400) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * (i) * 2 * (0.077 - 0.061))));
                 if (!keyValues.ContainsKey(i))
                     keyValues.Add(i, values.Last());
             }
@@ -196,15 +235,23 @@ namespace CalcTheCable
             return ordered;
         }
 
-        public Dictionary<double, double> GetFourtyLineForUh220()
+        public Dictionary<double, double> GetFourthLineForUh220()
         {
             var values = new List<double>();
             var keyValues = new Dictionary<double, double>();
             values.Add(Math.Sqrt(((_ac600 - _ac500) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * _t * 2 * (0.061 - 0.047))));
-            keyValues.Add(_tnb, values.Last());
+            keyValues.Add(_t, values.Last());
+			if (_nB <= values.First() && _nB >= previousMax)
+			{
+				SelectedCable = "AC 500";
+			}
+			else if(_nB >= values.First())
+			{
+				SelectedCable = "AC 600";
+			}
             for (double i = 1000; i <= 8000; i += 100)
             {
-                values.Add(Math.Sqrt(((_ac600 - _ac500) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * GetMaxT(i) * 2 * (0.061 - 0.047))));
+                values.Add(Math.Sqrt(((_ac600 - _ac500) * (1 + 9.91 * 0.008) * 10 * 10 * 10) / (3 * (i) * 2 * (0.061 - 0.047))));
                 if (!keyValues.ContainsKey(i))
                     keyValues.Add(i, values.Last());
             }
@@ -218,9 +265,5 @@ namespace CalcTheCable
 			_t = ((0.124 + _tnb / 10000) * (0.124 + _tnb / 10000.0) * 8760);
 		}
 
-		private double GetMaxT(double tnb)
-		{
-			return ((0.124 + tnb / 10000.0) * (0.124 + tnb/ 10000.0) * 8760);
-        }
 	}
 }

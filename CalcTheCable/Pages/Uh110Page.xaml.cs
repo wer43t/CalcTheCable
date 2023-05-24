@@ -24,6 +24,8 @@ namespace CalcTheCable.Pages
     {
         ScottPlot.Plottable.Crosshair crosshair;
         Core core = new Core();
+        Dictionary<double, double> FirstLine;
+        Dictionary<double, double> SecondLine;
         public Uh110Page()
         {
             InitializeComponent();
@@ -38,26 +40,32 @@ namespace CalcTheCable.Pages
             core.AC150 = Int32.Parse(tbAC150.Text);
             core.AC240 = Int32.Parse(tbAC240.Text);
             core.TNB = Int32.Parse(tbTnb.Text);
+            core.NB = Double.Parse(tbТb.Text);
             core.GetT();
-            WpfPlot1.Plot.AddScatterLines(core.GetFirstLineForUh110().Keys.ToArray(), core.GetFirstLineForUh110().Values.ToArray(), System.Drawing.Color.Black, 3);
-            WpfPlot1.Plot.AddScatterLines(core.GetSecondLineForUh110().Keys.ToArray(), core.GetSecondLineForUh110().Values.ToArray(), System.Drawing.Color.Green, 3);
-
-            WpfPlot1.Refresh();
+            FirstLine = core.GetFirstLineForUh110();
+            SecondLine = core.GetSecondLineForUh110();
+            WpfPlot1.Plot.AddScatterLines(FirstLine.Keys.ToArray(), FirstLine.Values.ToArray(), System.Drawing.Color.Black, 3);
+            WpfPlot1.Plot.AddScatterLines(SecondLine.Keys.ToArray(), SecondLine.Values.ToArray(), System.Drawing.Color.Green, 3);
+            double coordinateX = Double.Parse(tbTnb.Text);
+            double coordinateY = Double.Parse(tbТb.Text);
+            crosshair = WpfPlot1.Plot.AddCrosshair(core.T, coordinateY);
+            tbSelected.Content = core.SelectedCable;
+            WpfPlot1.Refresh(); ;
         }
 
 
         private void WpfPlot1_LeftClicked(object sender, RoutedEventArgs e)
         {
-           (double coordinateX, double coordinateY) = WpfPlot1.GetMouseCoordinates();
-            if(crosshair is null)
+            (double coordinateX, double coordinateY) = WpfPlot1.GetMouseCoordinates();
+            if (crosshair is null)
             {
                 crosshair = WpfPlot1.Plot.AddCrosshair(coordinateX, coordinateY);
             }
             else
             {
                 crosshair.X = coordinateX; crosshair.Y = coordinateY;
-                //crosshair.Y = 400;
-                
+                crosshair.Y = 400;
+
             }
             WpfPlot1.Refresh();
 
