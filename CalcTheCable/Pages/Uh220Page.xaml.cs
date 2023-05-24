@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CalcTheCable.Pages
 {
@@ -52,9 +43,9 @@ namespace CalcTheCable.Pages
             WpfPlot1.Plot.AddScatterLines(SecondLine.Keys.ToArray(), SecondLine.Values.ToArray(), System.Drawing.Color.Green, 3);
             WpfPlot1.Plot.AddScatterLines(ThirdLine.Keys.ToArray(), ThirdLine.Values.ToArray(), System.Drawing.Color.Red, 3);
             WpfPlot1.Plot.AddScatterLines(FourthLine.Keys.ToArray(), FourthLine.Values.ToArray(), System.Drawing.Color.Blue, 3);
-            
+
             double coordinateX = Double.Parse(tbTnb.Text);
-            double coordinateY = Double.Parse(tbТb.Text); 
+            double coordinateY = Double.Parse(tbТb.Text);
             crosshair = WpfPlot1.Plot.AddCrosshair(core.T, coordinateY);
             tbSelected.Content = core.SelectedCable;
             WpfPlot1.Refresh();
