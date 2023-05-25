@@ -19,21 +19,13 @@ namespace CalcTheCable
 
         private double _t;
 
-        private int minT = 1000;
-        private int maxT = 8000;
+        private int minT = 999;
+        private int maxT = 8001;
 
         public double T // τ
         {
             get { return _t; }
-            set
-            {
-                if (value > minT & value < maxT)
-                    _t = value;
-                else
-                {
-                    throw new ArgumentException();
-                }
-            }
+            set { _t = value; }
         }
 
         private double _tnb;
@@ -41,14 +33,22 @@ namespace CalcTheCable
         public double TNB
         {
             get { return _tnb; }
-            set { _tnb = value; }
+            set
+            {
+                if (value > minT & value < maxT)
+                    _tnb = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
 
         private double _nB;
 
-        private int minNB = 10;
-        private int maxNB = 1500;
+        private int minNB = 9;
+        private int maxNB = 2501;
         public double NB
         {
             get { return _nB; }
@@ -63,12 +63,23 @@ namespace CalcTheCable
             }
         }
 
+        private int minK = 999;
+        private int maxK = 10000001;
+
         private int _ac120;
 
         public int AC120
         {
             get { return _ac120; }
-            set { _ac120 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac120 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac150;
@@ -76,7 +87,15 @@ namespace CalcTheCable
         public int AC150
         {
             get { return _ac150; }
-            set { _ac150 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac150 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac240;
@@ -84,7 +103,15 @@ namespace CalcTheCable
         public int AC240
         {
             get { return _ac240; }
-            set { _ac240 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac240 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac300;
@@ -92,7 +119,15 @@ namespace CalcTheCable
         public int AC300
         {
             get { return _ac300; }
-            set { _ac300 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac300 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac400;
@@ -100,7 +135,15 @@ namespace CalcTheCable
         public int AC400
         {
             get { return _ac400; }
-            set { _ac400 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac400 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac500;
@@ -108,7 +151,15 @@ namespace CalcTheCable
         public int AC500
         {
             get { return _ac500; }
-            set { _ac500 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac500 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         private int _ac600;
@@ -116,7 +167,15 @@ namespace CalcTheCable
         public int AC600
         {
             get { return _ac600; }
-            set { _ac600 = value; }
+            set
+            {
+                if (value > minK & value < maxK)
+                    _ac600 = value;
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
 
         public Dictionary<double, double> GetFirstLineForUh110()
